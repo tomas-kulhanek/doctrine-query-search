@@ -22,7 +22,7 @@ Static Analysis:
     - Prepare Environment
   stage: check
   script:
-    - vendor/bin/phpstan analyse --no-progress -c phpstan.neon || true
+    - vendor/bin/phpstan analyse --no-progress -c phpstan.neon
 
 Rector:
   allow_failure: true

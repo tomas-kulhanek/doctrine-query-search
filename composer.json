@@ -13,11 +13,13 @@
 	],
 	"require": {
 		"php": ">=8.0",
-		"tomas-kulhanek/query-search": "^2.0"
+		"tomas-kulhanek/query-search": "^2.0",
+		"doctrine/orm": "^2.7"
 	},
 	"require-dev": {
 		"phpstan/extension-installer": "^1.0",
 		"phpstan/phpstan": "^0.12.82",
+		"ramsey/uuid": "^4.1",
 		"rector/rector": "^0.9"
 	},
 	"suggest": {
