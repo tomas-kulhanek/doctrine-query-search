@@ -2,6 +2,7 @@
 
 namespace TomasKulhanek\DoctrineQuerySearch\Formatter;
 
+use TomasKulhanek\DoctrineQuerySearch\Column;
 use TomasKulhanek\QuerySearch\Enum\OperationEnum;
 use TomasKulhanek\QuerySearch\Params\FilterInterface;
 
@@ -30,7 +31,7 @@ class MysqlFormatter implements FormatterInterface
 		return '=';
 	}
 
-	public function formatValue(FilterInterface $filter): string
+	public function formatValue(FilterInterface $filter, Column $column): mixed
 	{
 		switch ($filter->getOperator()) {
 			case OperationEnum::START_WITH:
@@ -42,6 +43,6 @@ class MysqlFormatter implements FormatterInterface
 				return ($filter->isStartWithAsterisk() ? '%' : '') . $filter->getValue() . ($filter->isEndWithAsterisk() ? '%' : '');
 		}
 
-		return $filter->getValue();
+		return $column->getValue($filter);
 	}
 }

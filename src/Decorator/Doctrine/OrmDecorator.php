@@ -48,6 +48,7 @@ class OrmDecorator implements DecoratorInterface
 	protected function applyFilters(QueryBuilder $queryBuilder, array $filters, array $columns): void
 	{
 		$qbGenerator = new QueryNameGenerator();
+		/** @var FilterInterface $filterColumn */
 		foreach ($filters as $filterColumn) {
 			$column = $this->getColumnDefinition($filterColumn->getField(), $columns);
 
@@ -63,7 +64,7 @@ class OrmDecorator implements DecoratorInterface
 			$queryBuilder->andWhere($expression)
 				->setParameter(
 					$parameter,
-					$this->formatter->formatValue($filterColumn),
+					$this->formatter->formatValue($filterColumn, $column),
 					$column->getType()
 				);
 		}
@@ -100,8 +101,10 @@ class OrmDecorator implements DecoratorInterface
 		$this->applySorting($queryBuilder, $filter->getSorts(), $columns);
 
 
-		$queryBuilder
-			->setFirstResult($filter->getPagination()->getOffset())
-			->setMaxResults($filter->getPagination()->getLimit());
+		if ($filter->hasPagination()) {
+			$queryBuilder
+				->setFirstResult($filter->getPagination()->getOffset())
+				->setMaxResults($filter->getPagination()->getLimit());
+		}
 	}
 }
