@@ -4,10 +4,12 @@ declare(strict_types=1);
 namespace TomasKulhanek\DoctrineQuerySearch;
 
 use Doctrine\DBAL\Types\Types;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use TomasKulhanek\QuerySearch\Enum\OperationEnum;
 use TomasKulhanek\QuerySearch\Params\FilterInterface;
 
-class StringColumn extends Column
+class RamseyUuidRelationColumn extends Column
 {
 
     /**
@@ -16,9 +18,6 @@ class StringColumn extends Column
     protected function getAllowedOperators(): array
     {
         return [
-            OperationEnum::START_WITH,
-            OperationEnum::END_BY,
-            OperationEnum::LIKE,
             OperationEnum::EQUAL,
         ];
     }
@@ -28,8 +27,12 @@ class StringColumn extends Column
         return Types::STRING;
     }
 
-    public function getValue(FilterInterface $filterColumn): string
+    /**
+     * @param FilterInterface $filterColumn
+     * @return UuidInterface
+     */
+    public function getValue(FilterInterface $filterColumn): UuidInterface
     {
-        return $filterColumn->getValue();
+        return Uuid::fromString($filterColumn->getValue());
     }
 }

@@ -1,8 +1,10 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 namespace TomasKulhanek\DoctrineQuerySearch;
 
 use DateTimeImmutable;
+use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use TomasKulhanek\DoctrineQuerySearch\Exception\FilterException;
 use TomasKulhanek\QuerySearch\Enum\OperationEnum;
@@ -10,11 +12,10 @@ use TomasKulhanek\QuerySearch\Params\FilterInterface;
 
 class DateTimeColumn extends Column
 {
-
-    protected string $format = DateTimeImmutable::ATOM;
+    protected string $format = DateTimeInterface::ATOM;
 
     /**
-     * @return string[]
+     * @return OperationEnum[]
      */
     protected function getAllowedOperators(): array
     {
@@ -27,29 +28,35 @@ class DateTimeColumn extends Column
         ];
     }
 
-	public function getType(): string
+    public function getType(): string
     {
         return Types::DATETIME_IMMUTABLE;
     }
 
     /**
-     * @param FilterInterface $filterColumn
-     * @return DateTimeImmutable
+     * @throws FilterException
      */
     public function getValue(FilterInterface $filterColumn): DateTimeImmutable
     {
         if (!is_string($filterColumn->getValue())) {
             throw new FilterException(
-                sprintf('Date format for column "%s" is not valid. Format must be "%s"', $filterColumn->getField(), $this->format)
+                sprintf(
+                    'Date format for column "%s" is not valid. Format must be "%s"',
+                    $filterColumn->getField(),
+                    $this->format
+                )
             );
         }
         $dateTime = DateTimeImmutable::createFromFormat($this->format, $filterColumn->getValue());
         if (!$dateTime) {
             throw new FilterException(
-                sprintf('Date format for column "%s" is not valid. Format must be "%s"', $filterColumn->getField(), $this->format)
+                sprintf(
+                    'Date format for column "%s" is not valid. Format must be "%s"',
+                    $filterColumn->getField(),
+                    $this->format
+                )
             );
         }
         return $dateTime;
     }
-
 }

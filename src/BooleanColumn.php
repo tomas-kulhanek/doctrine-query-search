@@ -1,4 +1,5 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 namespace TomasKulhanek\DoctrineQuerySearch;
 
@@ -10,25 +11,20 @@ class BooleanColumn extends Column
 {
 
     /**
-     * @return string[]
+     * @return OperationEnum[]
      */
     protected function getAllowedOperators(): array
     {
         return [OperationEnum::EQUAL];
     }
 
-	public function getType(): string
+    public function getType(): string
     {
         return Types::BOOLEAN;
     }
 
-    /**
-     * @param FilterInterface $filterColumn
-     * @return bool
-     */
     public function getValue(FilterInterface $filterColumn): bool
     {
         return !empty($filterColumn->getValue());
     }
-
 }

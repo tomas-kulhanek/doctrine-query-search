@@ -4,10 +4,11 @@ declare(strict_types=1);
 namespace TomasKulhanek\DoctrineQuerySearch;
 
 use Doctrine\DBAL\Types\Types;
+use Symfony\Component\Uid\Ulid;
 use TomasKulhanek\QuerySearch\Enum\OperationEnum;
 use TomasKulhanek\QuerySearch\Params\FilterInterface;
 
-class StringColumn extends Column
+class SymfonyUlidRelationColumn extends Column
 {
 
     /**
@@ -16,9 +17,6 @@ class StringColumn extends Column
     protected function getAllowedOperators(): array
     {
         return [
-            OperationEnum::START_WITH,
-            OperationEnum::END_BY,
-            OperationEnum::LIKE,
             OperationEnum::EQUAL,
         ];
     }
@@ -28,8 +26,8 @@ class StringColumn extends Column
         return Types::STRING;
     }
 
-    public function getValue(FilterInterface $filterColumn): string
+    public function getValue(FilterInterface $filterColumn): Ulid
     {
-        return $filterColumn->getValue();
+        return Ulid::fromString($filterColumn->getValue());
     }
 }

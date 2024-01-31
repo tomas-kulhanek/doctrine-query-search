@@ -1,4 +1,5 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 namespace TomasKulhanek\DoctrineQuerySearch;
 
@@ -10,7 +11,7 @@ class IntegerColumn extends Column
 {
 
     /**
-     * @return string[]
+     * @return OperationEnum[]
      */
     protected function getAllowedOperators(): array
     {
@@ -23,18 +24,13 @@ class IntegerColumn extends Column
         ];
     }
 
-	public function getType(): string
+    public function getType(): string
     {
         return Types::INTEGER;
     }
 
-    /**
-     * @param FilterInterface $filterColumn
-     * @return int
-     */
     public function getValue(FilterInterface $filterColumn): int
     {
         return intval($filterColumn->getValue());
     }
-
 }
