@@ -19,7 +19,8 @@
 	"require-dev": {
 		"phpstan/phpstan": "^0.12.82",
 		"ramsey/uuid": "^4.7",
-        "symfony/uid": "^7.0"
+        "symfony/uid": "^7.0",
+        "symfony/doctrine-bridge": "^7.0"
     },
 	"suggest": {
 	},

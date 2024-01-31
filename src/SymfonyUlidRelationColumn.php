@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace TomasKulhanek\DoctrineQuerySearch;
 
 use Doctrine\DBAL\Types\Types;
+use Symfony\Bridge\Doctrine\Types\UlidType;
 use Symfony\Component\Uid\Ulid;
 use TomasKulhanek\QuerySearch\Enum\OperationEnum;
 use TomasKulhanek\QuerySearch\Params\FilterInterface;
@@ -23,7 +24,7 @@ class SymfonyUlidRelationColumn extends Column
 
     public function getType(): string
     {
-        return Types::STRING;
+        return UlidType::NAME;
     }
 
     public function getValue(FilterInterface $filterColumn): Ulid
