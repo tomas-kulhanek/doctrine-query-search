@@ -13,7 +13,7 @@
 	],
 	"require": {
 		"php": ">=8.2",
-		"tomas-kulhanek/query-search": "^2.1",
+		"tomas-kulhanek/query-search": "^2.3.0",
 		"doctrine/orm": "^2.17"
 	},
 	"require-dev": {
