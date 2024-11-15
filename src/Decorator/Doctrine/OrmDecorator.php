@@ -18,14 +18,14 @@ class OrmDecorator implements DecoratorInterface
 {
 
     public function __construct(
-        private FormatterInterface $formatter
+        private readonly FormatterInterface $formatter
     ) {
     }
 
     /**
-     * @param string $column
-     * @param Column[] $columns
-     * @return Column
+     * @template T
+     * @param array<Column<T>> $columns
+     * @return Column<T>
      * @throws FilterException
      */
     protected function getColumnDefinition(string $column, array $columns): Column
@@ -40,15 +40,14 @@ class OrmDecorator implements DecoratorInterface
     }
 
     /**
-     * @param QueryBuilder $queryBuilder
-     * @param array<int, FilterInterface> $filters
-     * @param Column[] $columns
+     * @template T
+     * @param list<FilterInterface> $filters
+     * @param array<Column<T>> $columns
      * @throws FilterException
      */
     protected function applyFilters(QueryBuilder $queryBuilder, array $filters, array $columns): void
     {
         $qbGenerator = new QueryNameGenerator();
-        /** @var FilterInterface $filterColumn */
         foreach ($filters as $filterColumn) {
             $column = $this->getColumnDefinition($filterColumn->getField(), $columns);
 
@@ -71,14 +70,14 @@ class OrmDecorator implements DecoratorInterface
     }
 
     /**
-     * @param QueryBuilder $queryBuilder
-     * @param array<int, SortInterface> $sorts
-     * @param Column[] $columns
+     * @template T
+     * @param array<Column<T>> $columns
+     * @param list<SortInterface> $sorts
      * @throws FilterException
      */
     protected function applySorting(QueryBuilder $queryBuilder, array $sorts, array $columns): void
     {
-        if (empty($sorts)) {
+        if ($sorts === []) {
             return;
         }
 
@@ -90,13 +89,6 @@ class OrmDecorator implements DecoratorInterface
         }
     }
 
-    /**
-     * @param QueryBuilder $queryBuilder
-     * @param RequestParamsInterface $filter
-     * @param Column[] $columns
-     * @return void
-     * @throws FilterException
-     */
     public function decorate(QueryBuilder $queryBuilder, RequestParamsInterface $filter, array $columns): void
     {
         $this->applyFilters($queryBuilder, $filter->getFilters(), $columns);

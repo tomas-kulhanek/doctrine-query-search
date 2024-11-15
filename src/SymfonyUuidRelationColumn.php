@@ -9,12 +9,11 @@ use Symfony\Component\Uid\Uuid;
 use TomasKulhanek\QuerySearch\Enum\OperationEnum;
 use TomasKulhanek\QuerySearch\Params\FilterInterface;
 
+/**
+ * @extends Column<Uuid>
+ */
 class SymfonyUuidRelationColumn extends Column
 {
-
-    /**
-     * @return OperationEnum[]
-     */
     protected function getAllowedOperators(): array
     {
         return [

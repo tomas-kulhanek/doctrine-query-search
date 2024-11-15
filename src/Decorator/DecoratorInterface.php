@@ -10,9 +10,10 @@ use TomasKulhanek\QuerySearch\Params\RequestParamsInterface;
 interface DecoratorInterface
 {
     /**
+     * @template T
      * @param QueryBuilder $queryBuilder
      * @param RequestParamsInterface $filter
-     * @param Column[] $columns
+     * @param array<Column<T>> $columns
      * @return void
      */
     public function decorate(QueryBuilder $queryBuilder, RequestParamsInterface $filter, array $columns): void;
