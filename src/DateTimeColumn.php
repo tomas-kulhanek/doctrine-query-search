@@ -10,13 +10,13 @@ use TomasKulhanek\DoctrineQuerySearch\Exception\FilterException;
 use TomasKulhanek\QuerySearch\Enum\OperationEnum;
 use TomasKulhanek\QuerySearch\Params\FilterInterface;
 
+/**
+ * @extends Column<DateTimeImmutable>
+ */
 class DateTimeColumn extends Column
 {
     protected string $format = DateTimeInterface::ATOM;
 
-    /**
-     * @return OperationEnum[]
-     */
     protected function getAllowedOperators(): array
     {
         return [
@@ -38,15 +38,6 @@ class DateTimeColumn extends Column
      */
     public function getValue(FilterInterface $filterColumn): DateTimeImmutable
     {
-        if (!is_string($filterColumn->getValue())) {
-            throw new FilterException(
-                sprintf(
-                    'Date format for column "%s" is not valid. Format must be "%s"',
-                    $filterColumn->getField(),
-                    $this->format
-                )
-            );
-        }
         $dateTime = DateTimeImmutable::createFromFormat($this->format, $filterColumn->getValue());
         if (!$dateTime) {
             throw new FilterException(

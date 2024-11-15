@@ -7,12 +7,11 @@ use Doctrine\DBAL\Types\Types;
 use TomasKulhanek\QuerySearch\Enum\OperationEnum;
 use TomasKulhanek\QuerySearch\Params\FilterInterface;
 
+/**
+ * @extends Column<string>
+ */
 class StringColumn extends Column
 {
-
-    /**
-     * @return OperationEnum[]
-     */
     protected function getAllowedOperators(): array
     {
         return [

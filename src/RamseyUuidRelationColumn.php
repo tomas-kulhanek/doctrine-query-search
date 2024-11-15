@@ -9,12 +9,11 @@ use Ramsey\Uuid\UuidInterface;
 use TomasKulhanek\QuerySearch\Enum\OperationEnum;
 use TomasKulhanek\QuerySearch\Params\FilterInterface;
 
+/**
+ * @extends Column<UuidInterface>
+ */
 class RamseyUuidRelationColumn extends Column
 {
-
-    /**
-     * @return OperationEnum[]
-     */
     protected function getAllowedOperators(): array
     {
         return [
@@ -27,10 +26,6 @@ class RamseyUuidRelationColumn extends Column
         return Types::STRING;
     }
 
-    /**
-     * @param FilterInterface $filterColumn
-     * @return UuidInterface
-     */
     public function getValue(FilterInterface $filterColumn): UuidInterface
     {
         return Uuid::fromString($filterColumn->getValue());
