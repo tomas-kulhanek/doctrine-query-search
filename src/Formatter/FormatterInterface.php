@@ -9,6 +9,11 @@ use TomasKulhanek\QuerySearch\Params\FilterInterface;
 
 interface FormatterInterface
 {
+    /**
+     * @template T
+     * @param Column<T> $column
+     * @return T|string
+     */
     public function formatValue(FilterInterface $filter, Column $column): mixed;
 
     public function formatOperator(FilterInterface $filter): string;

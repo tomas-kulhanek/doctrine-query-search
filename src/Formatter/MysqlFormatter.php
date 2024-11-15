@@ -24,11 +24,6 @@ class MysqlFormatter implements FormatterInterface
         };
     }
 
-    /**
-     * @template T
-     * @param Column<T> $column
-     * @return T
-     */
     public function formatValue(FilterInterface $filter, Column $column): mixed
     {
         return match ($filter->getOperator()->value) {
